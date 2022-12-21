@@ -24,7 +24,6 @@ productForm.addEventListener("submit", function (e) {
 		return;
 	} else {
 		let dataArr;
-
 		if (dataGet("product")) {
 			dataArr = dataGet("product");
 		} else {
@@ -37,46 +36,31 @@ productForm.addEventListener("submit", function (e) {
 			photo: p_photo,
 		});
 		dataSend("product", dataArr);
-		let GetProductData = dataGet("product");
-		GetProductData.map((item) => {
-			let product = `
-		<div class="col-lg-4 col-md-6 col-12">
-									<div class="card product">
-										<img src="${item.photo}" alt="" class="card-img-top" />
-										<hr />
-										<div class="card-body">
-											<h2 class="card-title">${item.name}</h2>
-											<delete class="price">$ ${item.price}</delete>
-											<h5 class="s-price">$ ${item.sale}</h5>
-											<button class="btn btn-warning">Add To Cart</button>
-										</div>
-									</div>
-								</div>
-								
-			`;
-			product_sec.innerHTML += product;
-		});
-
+		productAdd();
 		productForm.reset();
 	}
 });
 
-let GetProductData = dataGet("product");
-GetProductData.map((item) => {
-	let product = `
-				<div class="col-lg-4 col-md-6 col-12">
-									<div class="card product">
-										<img
-											src="${item.photo}"
-											alt=""
-											class="card-img" />
-										<hr />
-										<h2 class="card-title">${item.name}</h2>
-										<delete class="price">$ ${item.price}</delete>
-										<h5 class="s-price">$ ${item.sale}</h5>
-										<button class="btn btn-warning">Add To Cart</button>
-									</div>
-								</div>
-			`;
-	product_sec.innerHTML += product;
-});
+productAdd();
+function productAdd() {
+	let getAllProduct = dataGet("product");
+	let productData = [];
+	getAllProduct.map((item) => {
+		productData += `
+
+		<div class="col-lg-4 col-md-6 col-12">
+			<div class="card product">
+				<img src="${item.photo}" alt="" class="card-img-top" />
+				<hr />
+				<div class="card-body">
+					<h2 class="card-title"> ${item.name} </h2>
+					<delete class="price"> $ ${item.price} </delete>
+					<h5 class="s-price"> $ ${item.sale} </h5>
+					<button class="btn btn-warning"> Add To Cart </button>
+				</div>
+			</div>
+		</div>
+`;
+	});
+	product_sec.innerHTML = productData;
+}
